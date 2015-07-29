@@ -1,0 +1,62 @@
+﻿{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {        
+        "vNetName": {
+            "type": "string"
+        },
+        "vNetLocation": {
+            "type": "string",
+            "defaultValue": "West Europe",
+            "allowedValues": [
+                "East US",
+                "West US",
+                "West Europe",
+                "East Asia",
+                "South East Asia"
+            ]
+        }
+    },
+    "variables": {
+        "vNet-targetPrefix": "10.0.0.0/16",
+        "vNet-targetSubnet1Name": "Subnet-1",
+        "vNet-targetSubnet1Prefix": "10.0.0.0/24",
+        "vNet-targetSubnet2Name": "Subnet-2",
+        "vNet-targetSubnet2Prefix": "10.0.1.0/24"
+    },
+    "resources": [
+        {
+            "name": "[parameters('vNetName')]",
+            "type": "Microsoft.Network/virtualNetworks",
+            "location": "[parameters('vNetLocation')]",
+            "apiVersion": "2015-05-01-preview",
+            "dependsOn": [ ],
+            "tags": {
+                "displayName": "vNet-target"
+            },
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('vNet-targetPrefix')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('vNet-targetSubnet1Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('vNet-targetSubnet1Prefix')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('vNet-targetSubnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('vNet-targetSubnet2Prefix')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "outputs": {
+    }
+}
