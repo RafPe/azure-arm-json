@@ -1,0 +1,33 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vNetResourceGroup": {
+      "value": null
+    },
+    "vNetName": {
+      "value": null
+    },
+    "subnetName": {
+      "value": null
+    }
+    "saName": {
+      "value": null
+    },
+    "storageAccountRsGr": {
+      "value": null
+    },
+    "vmlocation": {
+      "value": null
+    },
+    "adminUsername": {
+      "value": null
+    },
+    "vmName": {
+      "value": null
+    },
+    "dnsNameForPublicIP": {
+      "value": null
+    }
+  }
+}
