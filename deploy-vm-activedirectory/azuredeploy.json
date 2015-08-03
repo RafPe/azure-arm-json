@@ -1,0 +1,86 @@
+﻿{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": 
+  {
+    "virtualNetworkLocation": 
+    {
+      "type": "string",
+      "metadata": 
+      {
+        "description": "The name of the Virtual Network to Create"
+      }
+    },
+    "virtualNetworkName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the Virtual Network to Create"
+      },
+      "defaultValue": "adVNET"
+    },
+    "virtualNetworkAddressRange": {
+      "type": "string",
+      "metadata": {
+        "description": "The address range of the new VNET in CIDR format"
+      },
+      "defaultValue": "10.0.0.0/16"
+    },
+    "subnetName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the subnet created in the new VNET"
+      },
+      "defaultValue": "subnetRange"
+    },
+    "subnetRange": {
+      "type": "string",
+      "metadata": {
+        "description": "The address range of the subnet created in the new VNET"
+      },
+      "defaultValue": "10.0.0.0/24"
+    },
+    "MasterUrl": {
+      "type": "string",
+      "metadata": {
+        "description": "The location of resources such as templates and DSC modules that the script is dependent"
+      },
+      "defaultValue": "https://raw.githubusercontent.com/RafPe/azure-arm-json/master"
+    }
+
+
+  },
+    "variables": {
+      "vnetTemplateUri": "[concat(parameters('MasterUrl'),'/deploy-vnet/azurejson.json')]"
+    },
+    "resources": [
+      {
+        "name": "VNet",
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2015-01-01",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri": "[variables('vnetTemplateUri')]",
+            "contentVersion": "1.0.0.0"
+          },
+          "parameters": {
+            "virtualNetworkLocation": {
+              "value": "[parameters('virtualNetworkLocation')]"
+            },
+            "virtualNetworkName": {
+              "value": "[parameters('virtualNetworkName')]"
+            },
+            "virtualNetworkAddressRange": {
+              "value": "[parameters('virtualNetworkAddressRange')]"
+            },
+            "subnetName": {
+              "value": "[parameters('subnetName')]"
+            },
+            "subnetRange": {
+              "value": "[parameters('subnetRange')]"
+            }
+          }
+        }
+      }
+    ]
+  }
