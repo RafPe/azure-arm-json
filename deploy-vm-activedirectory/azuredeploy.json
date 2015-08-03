@@ -1,13 +1,10 @@
 ﻿{
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
-  "parameters": 
-  {
-    "virtualNetworkLocation": 
-    {
+  "parameters": {
+    "virtualNetworkLocation": {
       "type": "string",
-      "metadata": 
-      {
+      "metadata": {
         "description": "The name of the Virtual Network to Create"
       }
     },
@@ -49,18 +46,19 @@
 
 
   },
-    "variables": {
-      "vnetTemplateUri": "[concat(parameters('MasterUrl'),'/deploy-vnet/azurejson.json')]"
-    },
-    "resources": [
+  "variables": {
+    "vnetTemplateUri": "[concat(parameters('MasterUrl'),'/deploy-vnet/azurejson.json')]"
+    "storageAccountTemplateUri": "[concat(parameters('MasterUrl'),'/deploy-vnet/azurejson.json')]"
+  },
+  "resources": [
       {
-        "name": "VNet",
+        "name": "StorageAcc",
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2015-01-01",
         "properties": {
           "mode": "Incremental",
           "templateLink": {
-            "uri": "[variables('vnetTemplateUri')]",
+            "uri": "[variables('storageAccountTemplateUri')]",
             "contentVersion": "1.0.0.0"
           },
           "parameters": {
@@ -81,6 +79,35 @@
             }
           }
         }
+      },
+    {
+      "name": "VNet",
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2015-01-01",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[variables('vnetTemplateUri')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "virtualNetworkLocation": {
+            "value": "[parameters('virtualNetworkLocation')]"
+          },
+          "virtualNetworkName": {
+            "value": "[parameters('virtualNetworkName')]"
+          },
+          "virtualNetworkAddressRange": {
+            "value": "[parameters('virtualNetworkAddressRange')]"
+          },
+          "subnetName": {
+            "value": "[parameters('subnetName')]"
+          },
+          "subnetRange": {
+            "value": "[parameters('subnetRange')]"
+          }
+        }
       }
-    ]
+    }
+  ]
   }

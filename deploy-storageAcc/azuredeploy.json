@@ -1,20 +1,41 @@
 ﻿{
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": 
-	{
-        "StorageAccName": { "type": "string", "metadata": { "description": "new storage account which we will create to host our VMs" } },
-        "Location": { "type": "string", "defaultValue": "West Europe", "metadata": { "description": "default location used for this deployment" } }
+  "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "StorageAccName": {
+      "type": "string",
+      "metadata": { "description": "new storage account which we will create to host our VMs" }
     },
+    "StorageAccLocation": {
+      "type": "string",
+      "defaultValue": "West Europe",
+      "metadata": { "description": "default StorageAccLocation used for this deployment" }
+    },
+    "storageAccountType": {
+			"type": "string",
+			"allowedValues": [
+				"Standard_LRS",
+				"Standard_GRS",
+				"Standard_RAGRS",
+				"Standard_ZRS",
+				"Premium_LRS"
+			],
+			"metadata": {
+				"description": "The type of the Storage Account created"
+			},
+			"defaultValue": "Standard_LRS"
+		},
+
+  },
     "variables": {
-        "storageAccountType": "Standard_LRS"
+
     },
     "resources": [
         {
             "type": "Microsoft.Storage/storageAccounts",
             "name": "[parameters('StorageAccName')]",
             "apiVersion": "2015-05-01-preview",
-            "location": "[parameters('Location')]",
+            "StorageAccLocation": "[parameters('StorageAccLocation')]",
             "tags": {
                 "displayName": "StorageAccount"
             },
