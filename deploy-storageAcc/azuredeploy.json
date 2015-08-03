@@ -12,37 +12,34 @@
       "metadata": { "description": "default StorageAccLocation used for this deployment" }
     },
     "storageAccountType": {
-			"type": "string",
-			"allowedValues": [
-				"Standard_LRS",
-				"Standard_GRS",
-				"Standard_RAGRS",
-				"Standard_ZRS",
-				"Premium_LRS"
-			],
-			"metadata": {
-				"description": "The type of the Storage Account created"
-			},
-			"defaultValue": "Standard_LRS"
-		},
-
+      "type": "string",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_RAGRS",
+        "Standard_ZRS",
+        "Premium_LRS"
+      ],
+      "metadata": {
+        "description": "The type of the Storage Account created"
+      },
+      "defaultValue": "Standard_LRS"
+    }
+  
   },
     "variables": {
 
     },
     "resources": [
         {
-            "type": "Microsoft.Storage/storageAccounts",
-            "name": "[parameters('StorageAccName')]",
-            "apiVersion": "2015-05-01-preview",
-            "location": "[parameters('StorageAccLocation')]",
-            "tags": {
-                "displayName": "StorageAccount"
-            },
-            "properties": {
-                "accountType": "[variables('storageAccountType')]"
-            }
-        }
+			        "type": "Microsoft.Storage/storageAccounts",
+			        "name": "[parameters('StorageAccName')]",
+			        "apiVersion": "2015-05-01-preview",
+			        "location": "[parameters('StorageAccLocation')]",
+			        "properties": {
+				        "accountType": "[parameters('storageAccountType')]"
+			        }
+		        }
     ],
     "outputs": {
     }
