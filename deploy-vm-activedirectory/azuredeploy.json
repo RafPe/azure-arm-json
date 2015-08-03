@@ -2,6 +2,27 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
+    "StorageAccName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the storage account to Create"
+      },
+      "defaultValue": "adVNET"
+    },
+    "StorageAccLocation": {
+      "type": "string",
+      "metadata": {
+        "description": "The location for storage account"
+      },
+      "defaultValue": "West Europe"
+    },
+    "storageAccountType": {
+      "type": "string",
+      "metadata": {
+        "description": "The type of storage account to create"
+      },
+      "defaultValue": "Standard_LRS"
+    },
     "virtualNetworkLocation": {
       "type": "string",
       "metadata": {
@@ -47,8 +68,8 @@
 
   },
   "variables": {
-    "vnetTemplateUri": "[concat(parameters('MasterUrl'),'/deploy-vnet/azurejson.json')]"
-    "storageAccountTemplateUri": "[concat(parameters('MasterUrl'),'/deploy-vnet/azurejson.json')]"
+    "vnetTemplateUri": "[concat(parameters('MasterUrl'),'/deploy-vnet/azuredeploy.json')]",
+    "storageAccountTemplateUri": "[concat(parameters('MasterUrl'),'/deploy-storageAcc/azuredeploy.json')]"
   },
   "resources": [
       {
@@ -62,20 +83,14 @@
             "contentVersion": "1.0.0.0"
           },
           "parameters": {
-            "virtualNetworkLocation": {
-              "value": "[parameters('virtualNetworkLocation')]"
+            "StorageAccName": {
+              "value": "[parameters('StorageAccName')]"
             },
-            "virtualNetworkName": {
-              "value": "[parameters('virtualNetworkName')]"
+            "StorageAccLocation": {
+              "value": "[parameters('StorageAccLocation')]"
             },
-            "virtualNetworkAddressRange": {
-              "value": "[parameters('virtualNetworkAddressRange')]"
-            },
-            "subnetName": {
-              "value": "[parameters('subnetName')]"
-            },
-            "subnetRange": {
-              "value": "[parameters('subnetRange')]"
+            "storageAccountType": {
+              "value": "[parameters('storageAccountType')]"
             }
           }
         }
